@@ -1,3 +1,4 @@
+import 'package:comotudoreceitas/screens/categories_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,27 +14,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: CategoriesScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Vamos Cozinhar!!!'),
-      ),
-      body: Center(
-            child: Text('Navegar é preciso!!!'),
-      ),
-    );
-  }
-}
