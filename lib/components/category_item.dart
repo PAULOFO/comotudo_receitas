@@ -1,21 +1,18 @@
 import 'package:comotudoreceitas/models/category.dart';
 import 'package:flutter/material.dart';
-import '../screens/categories_meals_screen.dart';
+import '../models/category.dart';
+import '../utils/app_routes.dart';
 
 ///Essa Tela irá receber ../models/category.dart como parâmetro
 class CategoryItem extends StatelessWidget {
-
   final Category category;
 
   const CategoryItem(this.category);
 
   void _selectCategory(BuildContext context) {
-    Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) {
-          return CategoriesMealsScreen(category);
-        },
-       ),
+    Navigator.of(context).pushNamed(
+      AppRoutes.CATEGORIES_MEALS,
+      arguments: category,
     );
   }
 
@@ -34,7 +31,7 @@ class CategoryItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           gradient: LinearGradient(
-              colors: [///Recebe com cor da categoria + opacidade 0.5
+              colors: [///Recebe cor da categoria + opacidade 0.5
                 category.color.withOpacity(0.5),
                 category.color,
               ],
