@@ -1,3 +1,4 @@
+import '../utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import '../models/meal.dart';
 
@@ -7,13 +8,18 @@ class MealItem extends StatelessWidget {
 
   const MealItem(this.meal);
 
-  void _selectMeal() {} ///Função p/ mostrar os detalhes da receita em outra tela
+  void _selectMeal(BuildContext context) { ///Função p/ mostrar os detalhes da receita em outra tela
+    Navigator.of(context).pushNamed(
+        AppRoutes.Meal_DETAIL,
+        arguments: meal,
+    );
+  }
 
   ///Gera o construtor para o Card receber os dados do texto da receita
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: _selectMeal,
+      onTap: () => _selectMeal(context),
       splashColor: Theme.of(context).primaryColor,
       child: Card(
         shape: RoundedRectangleBorder(
