@@ -10,7 +10,7 @@ class MealItem extends StatelessWidget {
 
   void _selectMeal(BuildContext context) { ///Função p/ mostrar os detalhes da receita em outra tela
     Navigator.of(context).pushNamed(
-        AppRoutes.Meal_DETAIL,
+        AppRoutes.MEAL_DETAIL,
         arguments: meal,
     ).then((result) {
       if(result == null) {
