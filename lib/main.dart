@@ -23,24 +23,37 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   Settings settings = Settings();
-  List<Meal> _availableMeals = DUMMY_MEALS;//Comidas Disponíveis
+  List<Meal> _availableMeals = DUMMY_MEALS; //Comidas Disponíveis
+  List<Meal> _favoriteMeals = [];
 
   void _filterMeals(Settings settings) {
     setState(() {
       this.settings = settings;
       _availableMeals = DUMMY_MEALS.where((meal) {
-          final filterGluten = settings.isGlutenFree && !meal.isGlutenFree;
-          final filterLactose = settings.isLactoseFree && !meal.isLactoseFree;
-          final filterVegan = settings.isVegan && !meal.isVegan;
-          final filterVegetarian = settings.isVegetarian && !meal.isVegetarian;
-          return !filterGluten && filterLactose && filterVegan && filterVegetarian;
-///Se filtro de gluten não for verdadeiro & filtro de lactose não for verdadeiro
-///e fintro vegano não for verdadeiro e filtro vegetariano nao for verdadeiro
-///exibe a comida
+        final filterGluten = settings.isGlutenFree && !meal.isGlutenFree;
+        final filterLactose = settings.isLactoseFree && !meal.isLactoseFree;
+        final filterVegan = settings.isVegan && !meal.isVegan;
+        final filterVegetarian = settings.isVegetarian && !meal.isVegetarian;
+        return !filterGluten && filterLactose && filterVegan &&
+            !filterVegetarian;
+        ///Se filtro de gluten não for verdadeiro & filtro de lactose não for verdadeiro
+        ///e fintro vegano não for verdadeiro e filtro vegetariano nao for verdadeiro
+        ///exibe a comida
       }).toList();
     });
   }
 
+  void _toggleFavorite(Meal meal) {
+    setState(() {
+      _favoriteMeals.contains(meal)//Se estiver contindo
+          ? _favoriteMeals.remove(meal)//Remove, Senão
+          : _favoriteMeals.add(meal);//Adiciona
+    });
+  }
+
+  bool _isFavorite(Meal meal) {
+    return _favoriteMeals.contains(meal);
+  }
 
 
   @override
@@ -63,10 +76,10 @@ class _MyAppState extends State<MyApp> {
       ),
       //home: CategoriesScreen(),
       routes: {
-        AppRoutes.HOME: (ctx) => TabsScreen(),
+        AppRoutes.HOME: (ctx) => TabsScreen(_favoriteMeals),
         AppRoutes.CATEGORIES_MEALS: (ctx) => CategoriesMealsScreen(_availableMeals),
         ///_availableMeals Passa as comidas disponíveis para exibição por categoria
-        AppRoutes.MEAL_DETAIL: (ctx) => MealDetailScreen(),
+        AppRoutes.MEAL_DETAIL: (ctx) => MealDetailScreen(_toggleFavorite, _isFavorite),
         AppRoutes.SETTINGS: (ctx) => SettingsScreen(settings, _filterMeals),
       },
 //      onUnknownRoute: (settings) { //Tratamento de erros em Rotas
